@@ -6,7 +6,7 @@ on:
    push:
    gollum:
    schedule:
-       - cron: '00 16 * * *'
+       - cron: '00 21 * * *'
 
 jobs:
   AutoSign:
