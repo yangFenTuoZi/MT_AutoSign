@@ -8,7 +8,7 @@
     <name>MT_AutoSign</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <!-- 文件拷贝时的编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
