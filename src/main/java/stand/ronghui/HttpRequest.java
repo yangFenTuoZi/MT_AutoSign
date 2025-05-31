@@ -115,6 +115,9 @@ public class HttpRequest {
     private static String getCookies(HttpURLConnection connection) {
         Map<String, List<String>> map = connection.getHeaderFields();
         List<String> cookiesList = map.get("Set-Cookie");
+        if (cookiesList == null || cookiesList.isEmpty()) {
+            return "";
+        }
         StringBuilder newcookie = new StringBuilder();
         for (String cook : cookiesList) {
             newcookie.append(cook.split(";")[0]).append("; ");
