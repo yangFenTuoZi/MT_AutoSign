@@ -29,8 +29,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Build with Maven
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
         run: |
-          mvn compile exec:java -Dexec.mainClass="stand.ronghui.Main" -Dexec.args="${USERNAME} ${PASSWORD}"
+          mvn compile exec:java -Dexec.mainClass="stand.ronghui.Main" -Dexec.args="${{ secrets.USERNAME }} ${{ secrets.PASSWORD }}"
