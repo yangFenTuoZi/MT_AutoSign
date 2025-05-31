@@ -1,6 +1,7 @@
 package stand.ronghui;
 
 import java.io.BufferedReader;
+import java.net.URI;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.io.InputStreamReader;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.io.PrintWriter;
 import java.io.OutputStreamWriter;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class HttpRequest {
 	public String cookies = "";
@@ -25,7 +25,7 @@ public class HttpRequest {
 		StringBuilder result = new StringBuilder();
 		BufferedReader in = null;
 		try {
-			URL realUrl = new URL(url);
+			URL realUrl = URI.create(url).toURL();
 			//拼接Header请求信息
 			HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
 			buildHeader(connection, headers);
@@ -49,7 +49,7 @@ public class HttpRequest {
 					in.close();
 				}
 			} catch (Exception e2) {
-				e2.printStackTrace();
+				e2.printStackTrace(System.out);
 			}
 		}
 		return request;
@@ -61,7 +61,7 @@ public class HttpRequest {
 		BufferedReader in = null;
 		StringBuilder result = new StringBuilder();
 		try {
-			URL realUrl = new URL(url);
+			URL realUrl = URI.create(url).toURL();
 			HttpURLConnection conn = (HttpURLConnection) realUrl.openConnection();
 			buildHeader(conn, headers);
 			conn.setDoOutput(true);
@@ -89,7 +89,7 @@ public class HttpRequest {
 					in.close();
 				}
 			} catch (IOException ex) {
-				ex.printStackTrace();
+				ex.printStackTrace(System.out);
 			}
 		}
 		return request;
@@ -106,10 +106,10 @@ public class HttpRequest {
 	private static String buildParams(String url, String[][] parms) {
 		StringBuilder sb = new StringBuilder(url);
 		sb.append("?");
-		for (int i = 0;i < parms.length;i++) {
-			for (int j = 0;j < parms[i].length;j += 2) {
-				sb.append(parms[i][j]).append("=").append(parms[i][j + 1]);
-			}
+        for (String[] parm : parms) {
+            for (int j = 0; j < parm.length; j += 2) {
+                sb.append(parm[j]).append("=").append(parm[j + 1]);
+            }
             sb.append("&");
         }
 		return sb.toString();
@@ -122,7 +122,7 @@ public class HttpRequest {
 		for (String cook : cookiesList) {
 			newcookie.append(cook.split(";")[0]).append("; ");
 		}
-		if (newcookie.length() > 0) {
+		if (!newcookie.isEmpty()) {
 			return newcookie.toString();
 		}
 		return "";
